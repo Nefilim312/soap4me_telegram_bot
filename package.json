@@ -8,6 +8,11 @@
       "rss-parser": "^2.5.2"
    },
    "devDependencies": {},
+   "description": "Telegram bot for soap4.me site.",
+   "repository": {
+      "type": "git",
+      "url": "git@github.com:Nefilim312/soap4me_telegram_bot.git"
+   },
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
    },
