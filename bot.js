@@ -1,10 +1,10 @@
 "use strict"
 
+const consts = require('.//consts');
+
 let TelegramBot = require('node-telegram-bot-api');
 let parser = require('rss-parser');
-const token = '275785470:AAGe2ExDOZOrv1VJHG7UKZZDitJvRkB6_YE';
-const ADMIN_ID = 43327461;
-let bot = new TelegramBot(token, {
+let bot = new TelegramBot(consts.token, {
    polling: true
 });
 
@@ -20,18 +20,19 @@ function update() {
       for (let i in soaps) {
          if (!lastTitle) {
             lastTitle = soaps[0].title;
+            console.log('Нет последнего. Последний: ', soaps[0].title);
             return;
          }
 
-         console.log('Проверяем ', soaps[i].title);
-         console.log('Последний ', lastTitle);
+         console.log('Проверяем: ', soaps[i].title);
+         console.log('Последний: ', lastTitle);
 
          if (soaps[i].title == lastTitle) {
             lastTitle = soaps[0].title;
             return;
          } else {
-            console.log('Отправляем ', soaps[i].title);
-            bot.sendMessage(ADMIN_ID, parseTitle(soaps[i].title), {
+            console.log('Отправляем: ', soaps[i].title);
+            bot.sendMessage(consts.admin, parseTitle(soaps[i].title), {
                parse_mode: 'HTML'
             });
          }
@@ -39,6 +40,7 @@ function update() {
    })
 }
 
+console.log('Бот начал работу');
 update()
 var updater = setInterval(update, 1000 * 60 * 60);
 
@@ -77,7 +79,7 @@ bot.onText(/\/restart/, function(msg) {
    const chatId = msg.chat.id;
    let time = new Date().toLocaleString();
 
-   if (chatId === ADMIN_ID) {
+   if (chatId === consts.admin) {
       console.log(`Restart at ${time}`)
       lastTitle = '';
       update()
